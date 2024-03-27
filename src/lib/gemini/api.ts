@@ -27,7 +27,8 @@ const fetchData = async () => {
 
     const data = await response.json();
 
-    console.log(data);
+    const story = data.candidates[0].content.parts[0].text;
+    return story;
   } catch (error) {
     console.error("Error fetching data:", error);
   }

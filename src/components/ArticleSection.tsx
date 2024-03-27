@@ -13,8 +13,7 @@ const ArticleSection = async () => {
     const userChoices = fetchedUser.choices;
 
     const response = await fetchTopic("business");
-
-    fetchData();
+    const story = await fetchData();
 
     return (
       <div>
@@ -28,6 +27,7 @@ const ArticleSection = async () => {
           </TabsContent>
           <TabsContent value="summary">
             AI will generate the summary here.
+            {story}
           </TabsContent>
         </Tabs>
       </div>
