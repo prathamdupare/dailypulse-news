@@ -28,7 +28,6 @@ const fetchData = async () => {
     const data = await response.json();
 
     console.log(data);
-    // Assuming the response structure is like { "generatedContent": "The generated story..." }
   } catch (error) {
     console.error("Error fetching data:", error);
   }
