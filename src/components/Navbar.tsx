@@ -12,7 +12,7 @@ import { Button } from "./ui/button";
 const Navbar = () => {
   return (
     <div className="flex gap-2 py-2 px-2 border-b-[2px] items-center justify-between ">
-      <div className="text-bold">Logo</div>
+      <div className="font-bold">Daily Pulse</div>
 
       <div className="flex gap-2">
         <ModeToggle />

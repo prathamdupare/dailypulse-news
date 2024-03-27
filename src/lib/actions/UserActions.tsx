@@ -1,3 +1,4 @@
+"use server";
 import User from "../models/UserModel";
 import { connectToDb } from "../mongoose";
 
@@ -30,6 +31,13 @@ const CreateUser = async ({
   } catch (error: any) {
     console.log("Error creating User", error.message);
   }
+};
+
+export const fetchUser = async (id: string) => {
+  await connectToDb();
+
+  const fetchedUser = await User.findOne({ id: id });
+  return fetchedUser;
 };
 
 export default CreateUser;
