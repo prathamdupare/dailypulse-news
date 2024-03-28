@@ -1,12 +1,6 @@
-import CreateUser from "@/lib/actions/UserActions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 
-import { Toggle } from "@/components/ui/toggle";
-import { Button } from "@/components/ui/button";
-import fetchTopic from "@/lib/news-api/fetch";
-
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import Prefrences from "@/components/Prefrences";
 
 const page = async () => {
@@ -18,9 +12,6 @@ const page = async () => {
     image: user?.imageUrl || "",
     isRegistered: true,
   };
-
-  //await CreateUser(userData);
-  // await fetchTopic();
 
   return (
     <div className=" w-full flex flex-col items-center justify-center m-4">

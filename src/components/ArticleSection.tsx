@@ -1,58 +1,59 @@
-import { fetchUser } from "@/lib/actions/UserActions";
-import fetchTopic from "@/lib/news-api/fetch";
-import { currentUser } from "@clerk/nextjs";
+"use client";
 import ArticleCard from "./cards/ArticleCard";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import fetchData from "@/lib/gemini/api";
-import React from "react";
+import React, { Suspense, useState, useEffect } from "react";
+import getData from "@/lib/getData";
+import { SkeletonCard } from "./cards/SkeletonCard";
 
-const ArticleSection = async () => {
-  try {
-    const user = await currentUser();
-    const fetchedUser = await fetchUser(user.id);
-    const userChoices = fetchedUser.choices;
+const ArticleSection = () => {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
 
-    const response = await fetchTopic("technology");
-
-    const story = await fetchData({ text: JSON.stringify(response) });
-    let responseArray = story.split("**");
-    let newResponse = [];
-
-    for (let i = 0; i < responseArray.length; i++) {
-      if (i === 0 || i % 2 !== 1) {
-        newResponse.push(responseArray[i]);
-      } else {
-        newResponse.push(<br />);
-        newResponse.push(<strong>{responseArray[i]}</strong>);
-        newResponse.push(<br />);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getData();
+        console.log("Fetched data:", response); // Log the fetched data
+        setData(response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
-    }
+    };
 
-    return (
-      <div>
-        <Tabs defaultValue="articles" className="">
-          <TabsList>
-            <TabsTrigger value="articles">Articles</TabsTrigger>
-            <TabsTrigger value="summary">AI Summary</TabsTrigger>
-          </TabsList>
-          <TabsContent value="articles">
-            <ArticleCard articles={response} />
-          </TabsContent>
-          <TabsContent value="summary">
-            AI will generate the summary here.
-            {newResponse.map((item, index) => (
-              <React.Fragment key={index}>{item}</React.Fragment>
-            ))}{" "}
-          </TabsContent>
-        </Tabs>
-      </div>
-    );
-  } catch (error) {
-    // Handle errors here
-    console.error(error);
-    return null; // or any other error handling logic
+    fetchData();
+
+    // Cleanup function (optional)
+    return () => {
+      // Perform cleanup here if needed
+    };
+  }, []);
+
+  if (loading) {
+    return <SkeletonCard />;
   }
+
+  return (
+    <div>
+      <Tabs defaultValue="articles" className="">
+        <TabsList>
+          <TabsTrigger value="articles">Articles</TabsTrigger>
+          <TabsTrigger value="summary">AI Summary</TabsTrigger>
+        </TabsList>
+        <TabsContent value="articles">
+          <ArticleCard articles={data.response} />
+        </TabsContent>
+        <TabsContent value="summary">
+          AI will generate the summary here.
+          {data.newResponse.map((item, index) => (
+            <React.Fragment key={index}>{item}</React.Fragment>
+          ))}
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
 };
 
 export default ArticleSection;

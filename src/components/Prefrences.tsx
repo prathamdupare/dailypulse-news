@@ -28,11 +28,6 @@ const Prefrences = ({ user }: Props) => {
     }
   };
 
-  useEffect(() => {
-    console.log("Selected values:", selectedValues);
-    console.log(user);
-  }, [selectedValues]);
-
   const handleSubmit = async () => {
     await CreateUser({
       userId: user.userId,
