@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { Suspense, useState, useEffect } from "react";
 import getData from "@/lib/getData";
 import { SkeletonCard } from "./cards/SkeletonCard";
+import { ScrollArea } from "./ui/scroll-area";
 
 const ArticleSection = () => {
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,12 @@ const ArticleSection = () => {
   }, []);
 
   if (loading) {
-    return <SkeletonCard />;
+    return (
+      <div className="flex flex-col gap-3">
+        <div>Loading Your News and AI Summary...</div>
+        <SkeletonCard />
+      </div>
+    );
   }
 
   return (
@@ -42,14 +48,17 @@ const ArticleSection = () => {
           <TabsTrigger value="articles">Articles</TabsTrigger>
           <TabsTrigger value="summary">AI Summary</TabsTrigger>
         </TabsList>
-        <TabsContent value="articles">
-          <ArticleCard articles={data.response} />
+        <TabsContent value="articles" className="h-[800px]">
+          <ScrollArea className="h-full w-full rounded-md border p-4">
+            <ArticleCard articles={data.response} />
+          </ScrollArea>
         </TabsContent>
-        <TabsContent value="summary">
-          AI will generate the summary here.
-          {data.newResponse.map((item, index) => (
-            <React.Fragment key={index}>{item}</React.Fragment>
-          ))}
+        <TabsContent value="summary" className="h-[700px]">
+          <ScrollArea className="h-full w-full rounded-md border p-4">
+            {data.newResponse.map((item, index) => (
+              <React.Fragment key={index}>{item}</React.Fragment>
+            ))}
+          </ScrollArea>
         </TabsContent>
       </Tabs>
     </div>

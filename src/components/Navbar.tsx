@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 
 const Navbar = () => {
   return (
-    <div className="flex gap-2 py-2 px-2 border-b-[2px] items-center justify-between ">
+    <div className="flex gap-2 py-2 px-2 border-b-[2px] z-30  backdrop-blur-sm w-full fixed items-center justify-between ">
       <div className="font-bold">Daily Pulse</div>
 
       <div className="flex gap-2">

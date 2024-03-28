@@ -9,9 +9,20 @@ export default async function getData() {
   const fetchedUser = await fetchUser(user.id);
   const userChoices = fetchedUser.choices;
 
-  const response = await fetchTopic("technology");
+  let combinedResponse = [];
 
-  const story = await fetchData({ text: JSON.stringify(response) });
+  // Fetch topics for each user choice and combine responses
+  for (const choice of userChoices) {
+    try {
+      const response = await fetchTopic(choice);
+      combinedResponse = combinedResponse.concat(response);
+    } catch (error) {
+      console.error(`Error fetching topic "${choice}":`, error);
+    }
+  }
+
+  // Process combined response
+  const story = await fetchData({ text: JSON.stringify(combinedResponse) });
   let responseArray = story.split("**");
   let newResponse = [];
 
@@ -25,5 +36,5 @@ export default async function getData() {
     }
   }
 
-  return { response, newResponse };
+  return { response: combinedResponse, newResponse };
 }
