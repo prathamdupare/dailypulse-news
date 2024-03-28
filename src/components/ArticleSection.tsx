@@ -5,6 +5,7 @@ import ArticleCard from "./cards/ArticleCard";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import fetchData from "@/lib/gemini/api";
+import React from "react";
 
 const ArticleSection = async () => {
   try {
@@ -12,8 +13,21 @@ const ArticleSection = async () => {
     const fetchedUser = await fetchUser(user.id);
     const userChoices = fetchedUser.choices;
 
-    const response = await fetchTopic("business");
-    const story = await fetchData();
+    const response = await fetchTopic("technology");
+
+    const story = await fetchData({ text: JSON.stringify(response) });
+    let responseArray = story.split("**");
+    let newResponse = [];
+
+    for (let i = 0; i < responseArray.length; i++) {
+      if (i === 0 || i % 2 !== 1) {
+        newResponse.push(responseArray[i]);
+      } else {
+        newResponse.push(<br />);
+        newResponse.push(<strong>{responseArray[i]}</strong>);
+        newResponse.push(<br />);
+      }
+    }
 
     return (
       <div>
@@ -27,7 +41,9 @@ const ArticleSection = async () => {
           </TabsContent>
           <TabsContent value="summary">
             AI will generate the summary here.
-            {story}
+            {newResponse.map((item, index) => (
+              <React.Fragment key={index}>{item}</React.Fragment>
+            ))}{" "}
           </TabsContent>
         </Tabs>
       </div>
