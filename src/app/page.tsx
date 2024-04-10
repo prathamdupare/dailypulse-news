@@ -42,7 +42,7 @@ export default async function Home() {
               target="_blank"
               className={`w-full md:w-1/3 $`}
             >
-              Github Repository
+              Github
             </a>
           </div>
         </div>
