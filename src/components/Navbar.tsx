@@ -23,7 +23,7 @@ const Navbar = () => {
         </SignedIn>
         <SignedOut>
           {/* Signed out users get sign in button */}
-          <Button>
+          <Button asChild>
             <SignInButton />
           </Button>
         </SignedOut>

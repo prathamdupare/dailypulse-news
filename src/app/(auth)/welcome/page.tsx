@@ -14,7 +14,7 @@ const page = async () => {
   };
 
   return (
-    <div className=" w-full flex flex-col items-center justify-center m-4">
+    <div className=" w-full h-screen flex flex-col items-center justify-center m-4">
       <div className="flex flex-col items-center gap-3 mb-[40px]">
         <Image
           className="rounded-full"

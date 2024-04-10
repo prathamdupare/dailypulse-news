@@ -38,7 +38,7 @@ export default async function Home() {
             </Button>
 
             <a
-              href="https://github.com/leoMirandaa/shadcn-landing-page.git"
+              href="https://github.com/prathamdupare/dailypulse-news"
               target="_blank"
               className={`w-full md:w-1/3 $`}
             >
