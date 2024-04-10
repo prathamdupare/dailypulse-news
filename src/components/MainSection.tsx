@@ -3,7 +3,7 @@ import ArticleSection from "./ArticleSection";
 const MainSection = () => {
   return (
     <div>
-      <div className="h-full">
+      <div className="h-screen">
         <ArticleSection />
       </div>
     </div>
