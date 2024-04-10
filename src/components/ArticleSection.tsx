@@ -15,7 +15,7 @@ const ArticleSection = () => {
     const fetchData = async () => {
       try {
         const response = await getData();
-        console.log("Fetched data:", response); // Log the fetched data
+        console.log("Fetched data", response); // Log the fetched data
         setData(response);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -26,16 +26,13 @@ const ArticleSection = () => {
 
     fetchData();
 
-    // Cleanup function (optional)
-    return () => {
-      // Perform cleanup here if needed
-    };
+    return () => {};
   }, []);
 
   if (loading) {
     return (
       <div className="flex flex-col gap-3">
-        <div>Loading Your News and AI Summary...</div>
+        <div>Loading Latest News and AI Summary..</div>
         <SkeletonCard />
       </div>
     );
@@ -48,16 +45,24 @@ const ArticleSection = () => {
           <TabsTrigger value="articles">Articles</TabsTrigger>
           <TabsTrigger value="summary">AI Summary</TabsTrigger>
         </TabsList>
-        <TabsContent value="articles" className="h-[800px]">
-          <ScrollArea className="h-full w-full rounded-md border p-4">
-            <ArticleCard articles={data.response} />
-          </ScrollArea>
+        <TabsContent value="articles" className="">
+          <ArticleCard articles={data.response} />
         </TabsContent>
         <TabsContent value="summary" className="h-[700px]">
           <ScrollArea className="h-full w-full rounded-md border p-4">
-            {data.newResponse.map((item, index) => (
-              <React.Fragment key={index}>{item}</React.Fragment>
-            ))}
+            {data.newResponse.map((item, index) => {
+              if (typeof item === "string") {
+                // Remove occurrences of "\n\n" and "*"
+                const cleanedItem = item.replace(/\\n*/g, "");
+                // Render the cleaned string
+                return (
+                  <React.Fragment key={index}>{cleanedItem}</React.Fragment>
+                );
+              } else {
+                // Render React elements directly
+                return <React.Fragment key={index}>{item}</React.Fragment>;
+              }
+            })}{" "}
           </ScrollArea>
         </TabsContent>
       </Tabs>

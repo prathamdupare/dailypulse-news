@@ -14,7 +14,7 @@ const ArticleCard = ({ articles }) => {
       <div className="grid gap-4 ">
         <div className="flex gap-2 flex-wrap">
           {articles.map((article, index) => (
-            <Card className="w-[400px] min-h-[300px]" key={index}>
+            <Card className="w-full md:w-[400px] md:min-h-[300px]" key={index}>
               <div>
                 <CardHeader>
                   <CardTitle>{article.title}</CardTitle>

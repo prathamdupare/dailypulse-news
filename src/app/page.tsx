@@ -16,7 +16,7 @@ export default async function Home() {
 
   if (!userInfo?.isRegistered) redirect("/welcome");
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24">
+    <main className="flex min-h-screen flex-col items-center py-24 px-5 md:p-24">
       <MainSection />
     </main>
   );
