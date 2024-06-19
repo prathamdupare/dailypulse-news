@@ -28,7 +28,7 @@ export default async function Home() {
           <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
             Stay Ahead, Stay Informed: Your Personalized News Companion{" "}
             <span className="inline bg-gradient-to-r from-[#61DAFB] via-[#1fc0f1] to-[#03a3d7] text-transparent bg-clip-text">
-              Powered by AI.
+              Powered by AI!.
             </span>
           </p>
 
